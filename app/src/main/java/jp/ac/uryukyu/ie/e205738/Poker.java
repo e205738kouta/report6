@@ -1,5 +1,4 @@
 package jp.ac.uryukyu.ie.e205738;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,8 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Poker {
+    private ArrayList<ArrayList<String>> cardList = new ArrayList<>();
     public Poker() {
-        ArrayList<ArrayList<String>> cardList = new ArrayList<>();
+        makePlayingCards();
+    }
+    public void makePlayingCards(){
         try {
             File file = new File("/Users/nomurakouta/prog2/report6/Cards.txt");
             FileReader filereader = new FileReader(file);
@@ -23,7 +25,7 @@ public class Poker {
                     }
                     cardList.add(card);
                 }
-                System.out.println(cardList);
+                //System.out.println(cardList);
                 bufferedReader.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -31,8 +33,14 @@ public class Poker {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<ArrayList<String>> getCardList(){
+        return this.cardList;
+    }
+    /*public void Judgment(){
 
     }
+    */
 
   
 }
