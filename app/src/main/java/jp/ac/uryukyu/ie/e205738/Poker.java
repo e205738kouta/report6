@@ -30,7 +30,6 @@ public class Poker {
                     }
                     cardList.add(card);
                 }
-                // System.out.println(cardList);
                 bufferedReader.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -42,6 +41,12 @@ public class Poker {
 
     public ArrayList<ArrayList<String>> getCardList() {
         return this.cardList;
+    }
+    public void addCardToList(ArrayList<String> card){
+        this.cardList.add(card);
+    }
+    public void pickCardFromList(ArrayList<String> card){
+        this.cardList.remove(card);
     }
 
     public String Judgment(ArrayList<ArrayList<String>> hand) {

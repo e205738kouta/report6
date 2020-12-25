@@ -8,6 +8,8 @@ public class Main {
         GameMaster gameMaster = new GameMaster();
         ArrayList<ArrayList<String>> hand = gameMaster.combination();
         System.out.println(hand);
+        gameMaster.change(hand);
+        System.out.println(hand);
         System.out.println(poker.Judgment(hand));
     }
 }
