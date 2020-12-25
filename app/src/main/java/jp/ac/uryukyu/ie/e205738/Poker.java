@@ -10,6 +10,7 @@ import java.util.Collections;
 
 public class Poker {
     private ArrayList<ArrayList<String>> cardList = new ArrayList<>();
+    private ArrayList<Integer> numbersInt = new ArrayList<>();
 
     public Poker() {
         makePlayingCards();
@@ -55,25 +56,28 @@ public class Poker {
                 }
             }
         }
-        if(JudgementRoyalStraightFlush(number)){
+        boolean judgedRoyalStraightFlush = JudgementRoyalStraightFlush(number);
+        boolean judgedSuit = JudgmentSuit(suit);
+        String judgedNumber = judgementNumber(number);
+        if(judgedRoyalStraightFlush){
             return "RoyalStraightFlush!";
-        }else if(JudgmentSuit(suit)){
-            if (judgementNumber(number)=="straight"){
+        }else if(judgedSuit){
+            if (judgedNumber=="straight"){
                 return "StraightFlush!";
             }else{
                 return "Flush!";
             }
-        }else if(judgementNumber(number)=="straight"){
+        }else if(judgedNumber=="straight"){
             return "Straght!";
-        }else if(judgementNumber(number)=="Four Cards"){
+        }else if(judgedNumber=="Four Cards"){
             return "Four Cards!";
-        }else if(judgementNumber(number)=="Full house"){
+        }else if(judgedNumber=="Full house"){
             return "Full house!";
-        }else if(judgementNumber(number)=="Three cards"){
+        }else if(judgedNumber=="Three cards"){
             return "Three cards!";
-        }else if(judgementNumber(number)=="Two pair"){
+        }else if(judgedNumber=="Two pair"){
             return "Two pair!";
-        }else if(judgementNumber(number)=="One pair"){
+        }else if(judgedNumber=="One pair"){
             return "One pair!";
         }else{
             return "No pair!";
@@ -89,7 +93,6 @@ public class Poker {
     }
 
     public String judgementNumber(ArrayList<String> number){
-        ArrayList<Integer> numbersInt = new ArrayList<>();
         for (String s : number) {
             numbersInt.add(Integer.parseInt(s));
         }
@@ -100,25 +103,39 @@ public class Poker {
         ArrayList<Integer> matchList = new ArrayList<>();
         for(int i=0; i<numbersInt.size(); i++){
             int match=0;
-            for (int j=i+1; j<numbersInt.size()-1-i; j++){
+            for (int j=i+1; j<numbersInt.size(); j++){
                 if (numbersInt.get(i)==numbersInt.get(j)){
                     match+=1;
                 } 
             }
             matchList.add(match);
         }
-        if (matchList.contains(4)){
+        if (matchList.contains(3)){
             return "Four Cards";   
-        }else if(matchList.contains(3)){
-            if(matchList.contains(2)){
+        }else if(matchList.contains(2)){
+            int pair=0;
+            for(int i :matchList){
+                if(i==1){
+                    pair+=1;
+                }
+            }
+            if(pair==2){
                 return "Full house";
             }else{
                 return "Three cards";
             }
-        }else if(matchList.contains(2)){
-            return "Two pair";
         }else if(matchList.contains(1)){
-            return "One pair";
+            int pair=0;
+            for(int i : matchList){
+                if(i==1){
+                    pair+=1;
+                }
+            }    
+            if(pair==2){
+                return "Two pair";
+            }else{
+                return "One pair";
+            }   
         }else{
             return "No pair";
         }
