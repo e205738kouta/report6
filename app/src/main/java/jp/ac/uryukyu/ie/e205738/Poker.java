@@ -10,7 +10,6 @@ import java.util.Collections;
 
 public class Poker {
     private ArrayList<ArrayList<String>> cardList = new ArrayList<>();
-    private ArrayList<Integer> numbersInt = new ArrayList<>();
 
     public Poker() {
         makePlayingCards();
@@ -98,23 +97,16 @@ public class Poker {
     }
 
     public String judgementNumber(ArrayList<String> number){
+        ArrayList<Integer> numbersInt = new ArrayList<>();
         for (String s : number) {
             numbersInt.add(Integer.parseInt(s));
         }
+        ArrayList<Integer> matchList = matchTime(numbersInt);
         Collections.sort(numbersInt);
         if (numbersInt.get(0)+1==numbersInt.get(1) && numbersInt.get(1)+1==numbersInt.get(2) && numbersInt.get(2)+1==numbersInt.get(3) && numbersInt.get(3)+1==numbersInt.get(4)){
             return "straight";
         }
-        ArrayList<Integer> matchList = new ArrayList<>();
-        for(int i=0; i<numbersInt.size(); i++){
-            int match=0;
-            for (int j=i+1; j<numbersInt.size(); j++){
-                if (numbersInt.get(i)==numbersInt.get(j)){
-                    match+=1;
-                } 
-            }
-            matchList.add(match);
-        }
+        
         if (matchList.contains(3)){
             return "Four Cards";   
         }else if(matchList.contains(2)){
@@ -158,5 +150,17 @@ public class Poker {
             return false;
         }
     }
-
+    public ArrayList<Integer> matchTime(ArrayList<Integer> number){
+        ArrayList<Integer> matchList = new ArrayList<>();
+        for(int i=0; i<number.size(); i++){
+            int match=0;
+            for (int j=i+1; j<number.size(); j++){
+                if (number.get(i)==number.get(j)){
+                    match+=1;
+                } 
+            }
+            matchList.add(match);
+        }
+        return matchList;
+    }
 }
