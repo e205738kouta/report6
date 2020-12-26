@@ -38,6 +38,6 @@ tasks.named('test') {
 }
 jar {
     manifest {
-        attributes  "Main-Class": "jp.ac.uryukyu.ie.e205738.App"
+        attributes  "Main-Class": "jp.ac.uryukyu.ie.e205738.Main"
     }
 }

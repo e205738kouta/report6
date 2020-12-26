@@ -22,6 +22,7 @@ public class GameMaster {
     }
 
     public ArrayList<ArrayList<String>> change(ArrayList<ArrayList<String>> hand,int numMember){
+        int num=0;
         System.out.println("交換したいカードはどれですか？");
         String sentence = "";
         for (int i = 0; i < hand.size(); i++) {
@@ -31,7 +32,11 @@ public class GameMaster {
         sentence += "5.交換しない";
         System.out.println(sentence);
         Scanner scan = new Scanner(System.in);
-        int num = scan.nextInt();
+        try{
+        num = scan.nextInt();
+        }catch(java.util.NoSuchElementException e){
+            e.printStackTrace();
+        }
         if (num == 5) {
             scan.close();
             return hand;
