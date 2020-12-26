@@ -311,8 +311,8 @@ public class GameMaster {
 
     public ArrayList<Integer> serchMatching(ArrayList<Integer> numberList, int matchtime) {
         ArrayList<Integer> matchNumber = new ArrayList<>();
-        for (int i : poker.matchTime(numberList)) {
-            if (i == matchtime) {
+        for (int i=0;i<numberList.size();i++) {
+            if (poker.matchTime(numberList).get(i) == matchtime) {
                 matchNumber.add(numberList.get(i));
             }
         }

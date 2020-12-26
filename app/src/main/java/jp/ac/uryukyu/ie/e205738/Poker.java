@@ -72,13 +72,13 @@ public class Poker {
                 return "Flush!";
             }
         }else if(judgedNumber=="straight"){
-            return "Straght!";
+            return "Straight!";
         }else if(judgedNumber=="Four Cards"){
             return "Four Cards!";
         }else if(judgedNumber=="Full house"){
             return "Full house!";
-        }else if(judgedNumber=="Three cards"){
-            return "Three cards!";
+        }else if(judgedNumber=="Three Cards"){
+            return "Three Cards!";
         }else if(judgedNumber=="Two pair"){
             return "Two pair!";
         }else if(judgedNumber=="One pair"){
@@ -119,7 +119,7 @@ public class Poker {
             if(pair==2){
                 return "Full house";
             }else{
-                return "Three cards";
+                return "Three Cards";
             }
         }else if(matchList.contains(1)){
             int pair=0;
