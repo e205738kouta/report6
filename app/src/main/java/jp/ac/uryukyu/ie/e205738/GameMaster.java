@@ -1,16 +1,29 @@
 package jp.ac.uryukyu.ie.e205738;
 
+/**
+ * ポーカーの実装。
+ * 手札を配ったり交換したり、勝敗を判定するメソッドなどが含まれている。
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameMaster {
+    /**
+     * 手札の枚数 : numHandCard
+     * 山札の初期枚数 : allCards
+     */
     Random random = new Random();
     private int numHandCard = 5;
     private int allCards = 52;
     Poker poker = new Poker();
-    
+    /**
+     * 手札を配るメソッド。
+     * @param hand　空のリストを渡している。
+     * @param numMember　手札を受け取るのが何番目かを渡す。1番目の場合は0を渡す。
+     * @return　作られた手札が返ってくる。
+     */
     public ArrayList<ArrayList<String>> combination(ArrayList<ArrayList<String>> hand,int numMember) {
         for (int i = 0; i < numHandCard; i++) {
             int dealCards = random.nextInt(allCards - i-numHandCard*numMember);
@@ -20,7 +33,12 @@ public class GameMaster {
         }    
         return hand;
     }
-
+    /**
+     * 手札を一枚交換するメソッド
+     * @param hand　交換前の手札を渡す。
+     * @param numMember　プレイヤーが何人かを渡す。今回の場合は自分とcpuの2人なので2を渡す。
+     * @return　ランダムに一枚交換された後の手札が返ってくる。
+     */
     public ArrayList<ArrayList<String>> change(ArrayList<ArrayList<String>> hand,int numMember){
         int num=0;
         System.out.println("交換したいカードはどれですか？");
@@ -60,7 +78,12 @@ public class GameMaster {
         return hand;
 
     }
-
+    /**
+     * 両者がフォーカードで被った際の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalFourCardReferee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu) {
         ArrayList<Integer> numPlayer = sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -84,7 +107,12 @@ public class GameMaster {
             }
         }
     }
-
+    /**
+     * 両者がストレートフラッシュで被った際の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalStraightFlushReferee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu) {
         ArrayList<Integer> numPlayer = sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -111,6 +139,12 @@ public class GameMaster {
         }
     }
 
+    /**
+     * 両者がスリーカードまたはフルハウスで被った際の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalThreeCardFullHouseReferee(ArrayList<ArrayList<String>> player,ArrayList<ArrayList<String>> cpu) {
         ArrayList<Integer> numPlayer = sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -134,7 +168,12 @@ public class GameMaster {
             }
         }
     }
-
+    /**
+     * 両者がツーペアで被った際の勝敗判定のメソッド
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalTwopairReferee(ArrayList<ArrayList<String>> player , ArrayList<ArrayList<String>> cpu){
         ArrayList<Integer> numPlayer= sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -182,6 +221,12 @@ public class GameMaster {
                 }
             }
     }
+    /**
+     * 両者がワンペアで被った際の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalOnePairReferee(ArrayList<ArrayList<String>> player , ArrayList<ArrayList<String>> cpu){
         ArrayList<Integer> numPlayer= sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -208,6 +253,12 @@ public class GameMaster {
             }
         }
     }
+    /**
+     * 両者がノーペア同士だった場合の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalNopairReferee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu){
         ArrayList<Integer> numPlayer= sortNumber(player);
         ArrayList<Integer> numCpu = sortNumber(cpu);
@@ -232,7 +283,12 @@ public class GameMaster {
             return "Cpu Win!";
         }
     }    
-
+    /**
+     * 今までの両者の役が被った際の判定をまとめたメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String equalReferee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu) {
         String judge;
         if(poker.Judgment(player)=="RoyalStraightFlush!"||poker.Judgment(player)=="Straight!"||poker.Judgment(player)=="Flush!"||poker.Judgment(player)=="StraghtFlush!"){
@@ -255,6 +311,12 @@ public class GameMaster {
             return judge;
         }   
     }
+    /**
+     * 両者の役が違う場合の勝敗判定のメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String differentReferee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu){
         ArrayList<Integer> judge = new ArrayList<>();
         ArrayList<ArrayList<ArrayList<String>>> hands = new ArrayList<>();
@@ -289,6 +351,12 @@ public class GameMaster {
             return "Cpu Win!";
         }
     }
+    /**
+     * 今までの勝敗判定をまとめたメソッド。
+     * @param player　自分の手札を渡す。
+     * @param cpu　cpuの手札を渡す。
+     * @return　勝者もしくは引き分けを表すStringが返ってくる。
+     */
     public String referee(ArrayList<ArrayList<String>> player, ArrayList<ArrayList<String>> cpu){
         String judge;
         if(poker.Judgment(player)==poker.Judgment(cpu)){
@@ -299,7 +367,11 @@ public class GameMaster {
             return judge;
         }
     }
-
+    /**
+     * 手札の数字だけに着目して小さい順にソートするメソッド
+     * @param hand　手札をそのまま渡す。
+     * @return　ソートされた数字のリストが返ってくる。
+     */
     public ArrayList<Integer> sortNumber(ArrayList<ArrayList<String>> hand) {
         ArrayList<Integer> sortedNum = new ArrayList<>();
         for (ArrayList<String> a : hand) {
@@ -308,7 +380,12 @@ public class GameMaster {
         Collections.sort(sortedNum);
         return sortedNum;
     }
-
+    /**
+     * 数字のリストから任意数ある数字を見つけるメソッド。
+     * @param numberList　捜索対象の数字のリストを渡す。
+     * @param matchtime　探して欲しい数字がリストにある個数を渡す。
+     * @return　対象の数をリストで返す。ツーペアの場合、二枚あるペアが二組出るのでリストにしている。
+     */
     public ArrayList<Integer> serchMatching(ArrayList<Integer> numberList, int matchtime) {
         ArrayList<Integer> matchNumber = new ArrayList<>();
         for (int i=0;i<numberList.size();i++) {
