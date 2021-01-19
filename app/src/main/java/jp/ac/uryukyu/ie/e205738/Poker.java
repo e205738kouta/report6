@@ -26,7 +26,7 @@ public class Poker {
      */
     public void makePlayingCards() {
         try {
-            File file = new File("/Users/nomurakouta/prog2/report6/Cards.txt");
+            File file = new File("Cards.txt");
             FileReader filereader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(filereader);
             try {
